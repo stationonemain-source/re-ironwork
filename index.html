@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>RE Ironwork — Build your door</title>
+<meta name="description" content="Custom forged iron doors. Pick the configuration, style, finish and glass, see the actual door, send the ticket to the shop.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --steel:#2B2F33; --steel-2:#22262A; --steel-3:#363B40; --steel-4:#41474D;
+  --plate:#D9DBDD; --plate-2:#E6E7E8; --plate-3:#CDD0D3;
+  --ink:#121416; --chalk:#F2F0EA; --scale:#9BA2A8; --scale-2:#545A60;
+  --amber:#F5A524; --amber-2:#FFC24D; --amber-ink:#1A1204;
+  --line:#3F4449; --line-l:#B9BDC1;
+  --shell:clamp(1rem,3.4vw,3.5rem);
+  --t:cubic-bezier(.2,.7,.2,1);
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --f-micro:.6875rem; --f-small:.8125rem; --f-body:.9375rem; --f-lead:clamp(1.05rem,1rem + .4vw,1.3rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--steel);color:var(--chalk);font-family:Archivo,system-ui,sans-serif;
+  font-size:var(--f-body);line-height:1.55;font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+::selection{background:var(--amber);color:var(--amber-ink)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+h1,h2,h3{margin:0;font-weight:800;font-stretch:125%;text-transform:uppercase;letter-spacing:-.01em;line-height:.95}
+h1{font-size:clamp(2rem,1.2rem + 3.2vw,4.4rem)}
+h2{font-size:clamp(1.9rem,1.1rem + 3vw,4rem)}
+h3{font-size:clamp(1.05rem,1rem + .5vw,1.4rem);line-height:1.1}
+p{margin:0}
+.mono{font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.08em;text-transform:uppercase}
+.lab{font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.1em;text-transform:uppercase;color:var(--scale)}
+.wrap{padding-inline:var(--shell)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:fixed;top:-100px;left:1rem;z-index:200;background:var(--amber);color:var(--amber-ink);padding:.6rem 1rem}
+.skip:focus{top:1rem}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.9rem 1.2rem;
+  border:1px solid var(--line);background:transparent;color:var(--chalk);cursor:pointer;
+  font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.1em;text-transform:uppercase;
+  transition:background .2s,border-color .2s,color .2s}
+.btn:hover{border-color:var(--chalk)}
+.btn--amber{background:var(--amber);border-color:var(--amber);color:var(--amber-ink);font-weight:500}
+.btn--amber:hover{background:var(--amber-2);border-color:var(--amber-2)}
+.btn--ink{background:var(--ink);border-color:var(--ink);color:var(--chalk)}
+.btn--ink:hover{background:#000}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:50;background:var(--steel);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:1.5rem;height:56px;padding-inline:var(--shell)}
+.brand{font-weight:800;font-stretch:125%;text-transform:uppercase;letter-spacing:.02em;font-size:1rem;margin-right:auto;display:flex;align-items:center;gap:.7rem}
+.brand i{width:10px;height:10px;background:var(--amber);display:inline-block}
+.nav-links{display:flex;gap:1.6rem}
+.nav-links a{font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.1em;text-transform:uppercase;color:var(--scale);transition:color .2s}
+.nav-links a:hover{color:var(--chalk)}
+@media (max-width:760px){.nav-links{display:none}}
+
+/* ---------- BUILD (hero configurator) ---------- */
+.build{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(360px,.95fr);min-height:calc(100svh - 56px);border-bottom:1px solid var(--line)}
+@media (max-width:980px){.build{grid-template-columns:1fr;min-height:0}}
+.stage{position:relative;background:var(--steel-2);display:grid;grid-template-rows:auto 1fr auto;min-height:0}
+.stage-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.9rem var(--shell);border-bottom:1px solid var(--line)}
+.stage-head h1{font-size:clamp(1.3rem,1rem + 1.4vw,2.1rem)}
+.stage-view{position:relative;display:grid;place-items:center;padding:clamp(1rem,2.5vw,2.2rem) var(--shell);min-height:0;overflow:hidden}
+.stage-view::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:48px 48px}
+.render{position:relative;aspect-ratio:3/4;height:100%;max-height:min(78svh,900px);max-width:100%;background:var(--steel-3);
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.7);overflow:hidden}
+@media (max-width:980px){.render{height:auto;width:min(100%,520px)}}
+.render img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .28s var(--t)}
+.render img.on{opacity:1}
+.render .pend{position:absolute;inset:auto 0 0 0;background:rgba(18,20,22,.86);color:var(--amber);padding:.6rem .9rem;display:none}
+.render .pend.on{display:block}
+.render .tag{position:absolute;top:.75rem;left:.75rem;background:var(--ink);color:var(--chalk);padding:.35rem .55rem}
+.render .tag b{color:var(--amber);font-weight:500}
+.strip{display:flex;gap:.5rem;padding:.8rem var(--shell);border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.thumb{flex:0 0 auto;width:72px;background:var(--steel-3);border:1px solid var(--line);padding:0;cursor:pointer;position:relative;
+  aspect-ratio:3/4;overflow:hidden;transition:border-color .2s}
+.thumb img{width:100%;height:100%;object-fit:cover;opacity:.75;transition:opacity .2s}
+.thumb:hover img{opacity:1}
+.thumb[aria-pressed="true"]{border-color:var(--amber);outline:1px solid var(--amber)}
+.thumb[aria-pressed="true"] img{opacity:1}
+.thumb span{position:absolute;inset:auto 0 0 0;background:rgba(18,20,22,.85);color:var(--chalk);font-family:var(--mono);font-size:.5625rem;letter-spacing:.08em;text-transform:uppercase;padding:.25rem .3rem;text-align:center}
+
+/* ---------- ticket ---------- */
+.ticket{background:var(--plate);color:var(--ink);display:flex;flex-direction:column;border-left:1px solid var(--line)}
+@media (max-width:980px){.ticket{border-left:0;border-top:1px solid var(--line)}}
+.t-head{padding:1rem var(--shell) .9rem;border-bottom:1px dashed var(--line-l);display:flex;justify-content:space-between;align-items:flex-end;gap:1rem}
+.t-head .no{font-family:var(--mono);font-size:1.1rem;letter-spacing:.06em;font-weight:500}
+.ticket .btn:not(.btn--ink){color:var(--ink);border-color:var(--line-l)}
+.ticket .btn:not(.btn--ink):hover{border-color:var(--ink)}
+.chip[aria-pressed="true"] .lab{color:var(--scale)}
+.t-body{padding:.4rem var(--shell) 0;display:grid;gap:1.05rem;flex:1}
+.grp{display:grid;gap:.5rem;padding-top:.6rem}
+.grp-lab{display:flex;justify-content:space-between;align-items:baseline}
+.grp-lab .lab{color:var(--scale-2)}
+.grp-lab .cur{font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.06em}
+.chips{display:grid;gap:.4rem}
+.chips--2{grid-template-columns:repeat(2,1fr)} .chips--4{grid-template-columns:repeat(4,1fr)} .chips--3{grid-template-columns:repeat(3,1fr)} .chips--5{grid-template-columns:repeat(5,1fr)}
+@media (max-width:1200px){.chips--5{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:480px){.chips--4{grid-template-columns:repeat(2,1fr)}}
+.chip{border:1px solid var(--line-l);background:var(--plate-2);cursor:pointer;padding:.6rem .55rem;text-align:left;display:grid;gap:.4rem;
+  font-size:var(--f-small);line-height:1.2;transition:border-color .15s,background .15s;position:relative}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--chalk);border-color:var(--ink)}
+.chip[aria-pressed="true"]::after{content:"";position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 12px 12px 0;border-color:transparent var(--amber) transparent transparent}
+.chip .sw{width:100%;height:14px;border:1px solid rgba(0,0,0,.18)}
+.sw--black{background:linear-gradient(90deg,#44474C,#1E2124)} .sw--bronze{background:linear-gradient(90deg,#B07A3A,#3A2412)}
+.sw--patina{background:linear-gradient(90deg,#7F9179,#2A3A2C)} .sw--pewter{background:linear-gradient(90deg,#C8CCD0,#6B7177)}
+.sw--clear{background:linear-gradient(90deg,#F4E9CF,#B9CAD6)} .sw--frosted{background:#E9ECEE} .sw--reeded{background:repeating-linear-gradient(90deg,#EEE8DA 0 3px,#AAB6BF 3px 5px)}
+.chip .nm{font-weight:500}
+.t-spec{margin-top:.4rem;border-top:1px dashed var(--line-l);padding-top:.9rem;display:grid;gap:.45rem}
+.t-row{display:flex;justify-content:space-between;gap:1rem;font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.05em}
+.t-row dt{color:var(--scale-2);text-transform:uppercase} .t-row dd{margin:0;text-align:right}
+.t-row.big dd{font-family:Archivo;font-stretch:125%;font-weight:800;font-size:1.5rem;letter-spacing:-.01em;line-height:1}
+.t-foot{padding:1rem var(--shell) 1.1rem;border-top:1px dashed var(--line-l);display:grid;gap:.6rem}
+.t-foot .btn{width:100%}
+.t-note{font-size:var(--f-micro);color:var(--scale-2);line-height:1.5}
+
+/* ---------- sections ---------- */
+.sec{padding-block:clamp(3.5rem,8vw,7rem)}
+.sec--plate{background:var(--plate);color:var(--ink)}
+.sec--plate .lab,.ticket .lab{color:var(--scale-2)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.2rem 3rem;align-items:end;margin-bottom:clamp(1.8rem,4vw,3rem)}
+@media (max-width:820px){.sec-head{grid-template-columns:1fr}}
+.sec-head p{max-width:52ch;font-size:var(--f-lead);line-height:1.45}
+.rule{height:1px;background:var(--line);margin-block:1rem}
+.sec--plate .rule{background:var(--line-l)}
+
+/* choices up close */
+.macros{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line-l);border:1px solid var(--line-l)}
+@media (max-width:1000px){.macros{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:560px){.macros{grid-template-columns:repeat(2,1fr)}}
+.macro{background:var(--plate-2);display:grid;grid-template-rows:auto 1fr}
+.macro .im{aspect-ratio:1;background:var(--plate-3);overflow:hidden}
+.macro .im img{width:100%;height:100%;object-fit:cover}
+.macro .tx{padding:.7rem .75rem .85rem;display:grid;gap:.3rem}
+.macro .tx b{font-weight:600;font-size:var(--f-small)}
+.macro .tx span{font-size:var(--f-micro);color:var(--scale-2);line-height:1.4}
+
+/* work */
+.work{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(.6rem,1.4vw,1.2rem)}
+.work .it{grid-column:span 6;display:grid;gap:.6rem}
+.work .it.w8{grid-column:span 8} .work .it.w4{grid-column:span 4}
+@media (max-width:820px){.work .it,.work .it.w8,.work .it.w4{grid-column:span 12}}
+.ph{background:var(--steel-3);overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;aspect-ratio:3/2}
+.ph.tall img{aspect-ratio:3/4}
+.it-meta{display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
+.it-meta b{font-weight:600}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+@media (max-width:1000px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+.step{background:var(--steel);padding:1.2rem 1.1rem 1.4rem;display:grid;gap:.7rem;align-content:start;min-height:190px}
+.step .wk{font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.08em;color:var(--amber)}
+.step p{font-size:var(--f-small);color:var(--scale);line-height:1.5}
+
+/* answers */
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-l);border:1px solid var(--line-l);margin-bottom:2.2rem}
+@media (max-width:820px){.facts{grid-template-columns:1fr}}
+.fact{background:var(--plate-2);padding:1.3rem 1.2rem 1.4rem;display:grid;gap:.5rem;align-content:start}
+.fact b{font-stretch:125%;font-weight:800;font-size:clamp(1.6rem,2.6vw,2.3rem);line-height:1;letter-spacing:-.01em;text-transform:uppercase}
+.fact p{font-size:var(--f-small);color:var(--scale-2);line-height:1.5}
+.qa{border-top:1px solid var(--line-l)}
+.qa:last-child{border-bottom:1px solid var(--line-l)}
+.qa summary{list-style:none;cursor:pointer;padding:1.1rem 2.4rem 1.1rem 0;position:relative;font-weight:600;font-size:var(--f-lead)}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";position:absolute;right:.2rem;top:50%;transform:translateY(-50%);font-family:var(--mono);color:var(--scale-2)}
+.qa[open] summary::after{content:"–"}
+.qa .a{padding:0 3rem 1.3rem 0;color:var(--scale-2);font-size:var(--f-small);max-width:70ch;line-height:1.55}
+
+/* send */
+.send-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(2rem,4vw,4rem)}
+@media (max-width:900px){.send-grid{grid-template-columns:1fr}}
+.carry{border:1px solid var(--line);background:var(--steel-2);padding:1rem 1.1rem;margin-bottom:1.2rem;display:grid;gap:.5rem}
+.carry .hd{display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
+.carry .hd b{font-family:var(--mono);font-size:var(--f-small);letter-spacing:.06em;color:var(--amber);font-weight:500}
+.field{display:grid;gap:.4rem;margin-bottom:1rem}
+.field label{font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.08em;text-transform:uppercase;color:var(--scale)}
+.field input,.field textarea,.field select{background:var(--steel-2);border:1px solid var(--line);padding:.85rem .95rem;color:var(--chalk);width:100%;transition:border-color .2s}
+.field input:hover,.field textarea:hover,.field select:hover{border-color:var(--scale)}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--amber)}
+.field textarea{min-height:120px;resize:vertical;line-height:1.5}
+.field .err{font-size:var(--f-micro);color:#FF8A65;min-height:1em;font-family:var(--mono)}
+.field.bad input,.field.bad textarea{border-color:#FF8A65}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media (max-width:560px){.two{grid-template-columns:1fr}}
+.hp{position:absolute;left:-9999px}
+.sent{border:1px solid var(--amber);background:var(--steel-2);padding:1.3rem 1.4rem;display:none;gap:.6rem}
+.sent.on{display:grid}
+
+/* footer */
+footer{border-top:1px solid var(--line);background:var(--steel-2)}
+.f-grid{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:1.6rem 2rem;padding-block:2.6rem}
+@media (max-width:820px){.f-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.f-grid{grid-template-columns:1fr}}
+.f-col{display:grid;gap:.55rem;align-content:start}
+.f-col a{font-size:var(--f-small);color:var(--scale);transition:color .2s}
+.f-col a:hover{color:var(--chalk)}
+.f-bot{border-top:1px solid var(--line);padding-block:1.2rem;display:flex;justify-content:space-between;gap:1.2rem;flex-wrap:wrap;align-items:center}
+.proto{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--amber);color:var(--amber);padding:.35rem .6rem}
+
+[data-rv]{opacity:0;transform:translateY(14px);transition:opacity .6s var(--t),transform .6s var(--t)}
+[data-rv].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important}
+  [data-rv]{opacity:1;transform:none}
+}
+
+/* =============================================== BELOW THE FOLD, v2 */
+:root{--amber-dk:#7A4A08}
+.wall{background:var(--ink);border-bottom:1px solid var(--line);padding-block:clamp(2.6rem,5vw,4.2rem)}
+.wall-head{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap;margin-bottom:1.3rem}
+.wall-head p{max-width:46ch;color:var(--scale);font-size:var(--f-lead);line-height:1.4}
+.wall-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px}
+@media (max-width:1100px){.wall-grid{grid-template-columns:repeat(8,1fr)}}
+@media (max-width:640px){.wall-grid{grid-template-columns:repeat(4,1fr)}}
+.tile{position:relative;aspect-ratio:3/4;background:var(--steel-3);border:0;padding:0;cursor:pointer;overflow:hidden}
+.tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s var(--t)}
+.tile:hover img{transform:scale(1.07)}
+.tile::after{content:attr(data-code);position:absolute;inset:auto 0 0 0;background:var(--amber);color:var(--amber-ink);
+  font-family:var(--mono);font-size:.5625rem;letter-spacing:.06em;padding:.22rem .3rem;white-space:nowrap;overflow:hidden;
+  transform:translateY(100%);transition:transform .2s var(--t)}
+.tile:hover::after,.tile:focus-visible::after{transform:none}
+.tile.on{outline:2px solid var(--amber);outline-offset:-2px}
+.wall-keys{display:flex;gap:1.6rem;flex-wrap:wrap;margin-top:1rem}
+.wall-keys span{font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.08em;text-transform:uppercase;color:var(--scale)}
+.wall-keys b{color:var(--amber);font-weight:500}
+
+.board{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(1.5rem,4vw,4rem);align-items:stretch}
+@media (max-width:900px){.board{grid-template-columns:1fr}}
+.board-im{position:relative;aspect-ratio:1;background:var(--plate-3);overflow:hidden}
+.board-im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s var(--t)}
+.board-im img.on{opacity:1}
+.board-im .cap{position:absolute;left:.9rem;bottom:.9rem;background:var(--ink);color:var(--chalk);padding:.4rem .6rem}
+.board-list{display:grid;align-content:start}
+.board-row{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:1rem;align-items:baseline;padding:.95rem 0;
+  border:0;border-top:1px solid var(--line-l);cursor:pointer;background:none;text-align:left;color:inherit;width:100%}
+.board-row:last-child{border-bottom:1px solid var(--line-l)}
+.board-row b{font-stretch:125%;font-weight:800;text-transform:uppercase;font-size:clamp(1.25rem,2.1vw,1.9rem);line-height:1;transition:color .2s;white-space:nowrap}
+.board-row span{font-size:var(--f-small);color:var(--scale-2)}
+.board-row.on b,.board-row:hover b{color:var(--amber-dk)}
+.board-row .k{font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.1em;color:var(--scale-2);text-transform:uppercase;grid-column:1/-1;margin-top:-.4rem}
+
+.shop{position:relative;min-height:82svh;display:grid;align-items:end;isolation:isolate;overflow:hidden;border-block:1px solid var(--line)}
+.shop>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.shop::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(to top,rgba(18,20,22,.96) 0%,rgba(18,20,22,.58) 42%,rgba(18,20,22,.12) 100%)}
+.shop-in{padding:clamp(3rem,8vw,7rem) var(--shell) clamp(2.4rem,5vw,4rem);max-width:1180px;display:grid;gap:1.4rem}
+.shop-q{font-stretch:125%;font-weight:800;text-transform:uppercase;font-size:clamp(1.55rem,.9rem + 3.4vw,4.3rem);line-height:.98;letter-spacing:-.012em}
+.shop-q em{font-style:normal;color:var(--amber)}
+.shop-by{display:flex;align-items:center;gap:.9rem}
+.shop-by i{width:34px;height:2px;background:var(--amber);display:block}
+
+.ledger{display:grid;gap:clamp(2.2rem,5vw,4.5rem)}
+.ledge{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(1rem,3vw,3rem);align-items:end}
+.ledge:nth-child(even){grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.ledge:nth-child(even) .ph{order:2}
+@media (max-width:820px){.ledge,.ledge:nth-child(even){grid-template-columns:1fr}.ledge:nth-child(even) .ph{order:0}}
+.ledge .ph img{aspect-ratio:4/3}
+.ledge-tx{display:grid;gap:.7rem}
+.ledge-tx .jn{font-family:var(--mono);color:var(--amber);font-size:var(--f-small);letter-spacing:.08em}
+.ledge-tx h3{font-size:clamp(1.5rem,2.6vw,2.4rem)}
+.ledge-tx dl{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.2rem;font-size:var(--f-small);margin:.3rem 0 0}
+.ledge-tx dt{color:var(--scale);font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.08em;text-transform:uppercase;padding-top:.15rem}
+.ledge-tx dd{margin:0}
+
+.route{border:1px solid var(--line-l);background:var(--plate-2);display:grid;grid-template-columns:repeat(5,1fr);position:relative}
+@media (max-width:900px){.route{grid-template-columns:1fr}}
+.stn{padding:1.3rem 1.1rem 1.5rem;border-right:1px solid var(--line-l);display:grid;gap:.6rem;align-content:start;position:relative;min-height:210px}
+.stn:last-child{border-right:0}
+@media (max-width:900px){.stn{border-right:0;border-bottom:1px solid var(--line-l);min-height:0}.stn:last-child{border-bottom:0}}
+.stn .wk{font-family:var(--mono);font-size:var(--f-micro);letter-spacing:.08em;color:var(--scale-2)}
+.stn h3{font-size:1.25rem}
+.stn p{font-size:var(--f-small);color:var(--scale-2);line-height:1.5}
+.stamp{position:absolute;top:.85rem;right:.85rem;border:2px solid var(--amber-dk);color:var(--amber-dk);font-family:var(--mono);
+  font-size:.5625rem;letter-spacing:.14em;padding:.2rem .4rem;transform:rotate(-8deg)}
+.route-foot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.8rem 0 0}
+
+.bigfacts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-l);border-bottom:1px solid var(--line-l);margin-bottom:2.4rem}
+@media (max-width:820px){.bigfacts{grid-template-columns:1fr}}
+.bf{padding:1.7rem 1.2rem 1.7rem 0;display:grid;gap:.45rem;align-content:start}
+.bf+.bf{padding-left:1.4rem;border-left:1px solid var(--line-l)}
+@media (max-width:820px){.bf+.bf{padding-left:0;border-left:0;border-top:1px solid var(--line-l)}}
+.bf b{font-stretch:125%;font-weight:800;font-size:clamp(2.6rem,6vw,5.4rem);line-height:.95;letter-spacing:-.02em;text-transform:uppercase}
+.bf p{font-size:var(--f-small);color:var(--scale-2);max-width:34ch;line-height:1.5}
+
+.tkt{background:var(--plate);color:var(--ink);padding:1.6rem clamp(1.2rem,2.5vw,2rem) 1.8rem;position:relative;margin-block:14px}
+.tkt::before,.tkt::after{content:"";position:absolute;left:0;right:0;height:14px;
+  background:radial-gradient(circle at 7px 7px,var(--steel) 6.5px,transparent 7.2px) 0 0/28px 14px repeat-x}
+.tkt::before{top:0} .tkt::after{bottom:0;transform:scaleY(-1)}
+.tkt .field input,.tkt .field textarea{background:#FFFFFF;border-color:var(--line-l);color:var(--ink)}
+.tkt .field input:focus,.tkt .field textarea:focus{border-color:var(--amber-dk)}
+.tkt .field label{color:var(--scale-2)}
+.tkt .carry{background:var(--plate-2);border-color:var(--line-l)}
+.tkt .carry .hd b{color:var(--amber-dk)}
+.tkt .t-note{color:var(--scale-2)}
+.tkt .sent{background:var(--plate-2);border-color:var(--amber-dk)}
+.tkt .sent p{color:var(--scale-2)}
+.tkt .field .err{color:#A8321E}
+</style>
+</head>
+<body>
+<a class="skip" href="#build">Skip to the configurator</a>
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#build"><i></i>RE Ironwork</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#build">Build</a><a href="#wall">Every door</a><a href="#work">Work</a><a href="#process">Process</a><a href="#answers">Answers</a>
+    </nav>
+    <a class="btn btn--amber" href="#send">Send to shop</a>
+  </div>
+</header>
+
+<main>
+<!-- ================= BUILD ================= -->
+<section class="build" id="build" aria-label="Door configurator">
+  <div class="stage">
+    <div class="stage-head">
+      <h1>Build your door</h1>
+      <p class="lab">Actual renders of the door you pick, not drawings</p>
+    </div>
+    <div class="stage-view">
+      <div class="render" id="render">
+        <img id="imgA" alt="" class="on">
+        <img id="imgB" alt="">
+        <div class="tag mono"><span id="tagKey">Double · Tuscan</span> <b id="tagCode">RE-D-TUS-BLK-CLR</b></div>
+        <div class="pend mono" id="pend">This combination has not been photographed yet. Showing the nearest one.</div>
+      </div>
+    </div>
+    <div class="strip" id="strip" role="group" aria-label="Style"></div>
+  </div>
+
+  <div class="ticket" role="group" aria-label="Job ticket">
+    <div class="t-head">
+      <div><p class="lab">Job ticket</p><p class="no" id="ticketNo">RE-0000-000</p></div>
+      <button class="btn" type="button" id="resetBtn" style="padding:.55rem .8rem">Reset</button>
+    </div>
+    <div class="t-body">
+      <div class="grp">
+        <div class="grp-lab"><span class="lab">Configuration</span><span class="cur" id="curConfig"></span></div>
+        <div class="chips chips--2" data-k="config">
+          <button class="chip" type="button" data-v="double"><span class="nm">Double</span><span class="lab">Two leaves · 72 in</span></button>
+          <button class="chip" type="button" data-v="single"><span class="nm">Single</span><span class="lab">One leaf · 42 in</span></button>
+        </div>
+      </div>
+      <div class="grp">
+        <div class="grp-lab"><span class="lab">Style</span><span class="cur" id="curStyle"></span></div>
+        <div class="chips chips--5" data-k="style">
+          <button class="chip" type="button" data-v="tuscan"><span class="nm">Tuscan</span><span class="lab">Scrollwork</span></button>
+          <button class="chip" type="button" data-v="modern"><span class="nm">Modern</span><span class="lab">Flat bar grid</span></button>
+          <button class="chip" type="button" data-v="gothic"><span class="nm">Gothic</span><span class="lab">Pickets</span></button>
+          <button class="chip" type="button" data-v="deco"><span class="nm">Art Deco</span><span class="lab">Geometric</span></button>
+          <button class="chip" type="button" data-v="flush"><span class="nm">Flush</span><span class="lab">Plain lite</span></button>
+        </div>
+      </div>
+      <div class="grp">
+        <div class="grp-lab"><span class="lab">Finish</span><span class="cur" id="curFinish"></span></div>
+        <div class="chips chips--4" data-k="finish">
+          <button class="chip" type="button" data-v="black"><span class="sw sw--black"></span><span class="nm">Forged black</span></button>
+          <button class="chip" type="button" data-v="bronze"><span class="sw sw--bronze"></span><span class="nm">Oil-rubbed bronze</span></button>
+          <button class="chip" type="button" data-v="patina"><span class="sw sw--patina"></span><span class="nm">Aged patina</span></button>
+          <button class="chip" type="button" data-v="pewter"><span class="sw sw--pewter"></span><span class="nm">Antique pewter</span></button>
+        </div>
+      </div>
+      <div class="grp">
+        <div class="grp-lab"><span class="lab">Glass</span><span class="cur" id="curGlass"></span></div>
+        <div class="chips chips--3" data-k="glass">
+          <button class="chip" type="button" data-v="clear"><span class="sw sw--clear"></span><span class="nm">Clear</span></button>
+          <button class="chip" type="button" data-v="frosted"><span class="sw sw--frosted"></span><span class="nm">Frosted</span></button>
+          <button class="chip" type="button" data-v="reeded"><span class="sw sw--reeded"></span><span class="nm">Reeded</span></button>
+        </div>
+      </div>
+      <dl class="t-spec">
+        <div class="t-row"><dt>Spec</dt><dd id="specLine"></dd></div>
+        <div class="t-row"><dt>Opening</dt><dd id="specOpen"></dd></div>
+        <div class="t-row"><dt>Lead time</dt><dd id="specLead"></dd></div>
+        <div class="t-row big"><dt>From</dt><dd id="specPrice"></dd></div>
+      </dl>
+    </div>
+    <div class="t-foot">
+      <a class="btn btn--ink" href="#send" id="sendBtn">Send this ticket to the shop</a>
+      <p class="t-note">Starting figure for the door as shown, installed within the metro. Every door is drawn for its own opening, so the shop confirms the number after measuring.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THE WALL ================= -->
+<section class="wall" id="wall">
+  <div class="wrap">
+    <div class="wall-head">
+      <div data-rv><p class="lab">Every combination</p><h2>One hundred and twenty<br>doors, one wall</h2></div>
+      <p data-rv>Everything the ticket can produce, photographed. Click any door and it loads in the configurator above.</p>
+    </div>
+    <div class="wall-grid" id="wallGrid" data-rv></div>
+    <div class="wall-keys" data-rv>
+      <span><b>Rows</b> style · Tuscan, Modern, Gothic, Art Deco, Flush</span>
+      <span><b>Across</b> finish then glass</span>
+      <span><b>Top half</b> double · <b>bottom half</b> single</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MATERIAL BOARD ================= -->
+<section class="sec sec--plate wrap" id="choices">
+  <div class="sec-head">
+    <div data-rv><p class="lab">Finish and glass</p><h2>What you're<br>actually choosing</h2></div>
+    <p data-rv>Cropped straight from the door photographs, so the finish you see here is the finish on the door. Hover or tap a line.</p>
+  </div>
+  <div class="board" data-rv>
+    <div class="board-im" id="boardIm"><div class="cap mono" id="boardCap">Forged black</div></div>
+    <div class="board-list" id="boardList"></div>
+  </div>
+</section>
+
+<!-- ================= THE SHOP ================= -->
+<section class="shop" aria-label="The shop">
+  <img src="img/forge.webp" alt="A craftsman hammering glowing hot iron on an anvil" loading="lazy">
+  <div class="shop-in">
+    <p class="lab" style="color:var(--amber)">The shop · Norman, Oklahoma</p>
+    <p class="shop-q" data-rv>I would rather turn work away than send it to somebody I cannot stand next to <em>at the anvil.</em></p>
+    <div class="shop-by" data-rv><i></i><div><p style="font-weight:600">Ruben Torres</p><p class="lab">Founder</p></div></div>
+  </div>
+</section>
+
+<!-- ================= WORK LEDGER ================= -->
+<section class="sec wrap" id="work">
+  <div class="sec-head">
+    <div data-rv><p class="lab">Out the door</p><h2>Recent jobs</h2></div>
+    <p data-rv>Gates, stairs and windows leave the shop too. Each was drawn for its own opening and exists once.</p>
+  </div>
+  <div class="ledger">
+    <div class="ledge" data-rv>
+      <div class="ph"><img src="img/gate.webp" alt="Ornamental iron driveway gate between stone pillars at dusk" loading="lazy"></div>
+      <div class="ledge-tx"><span class="jn">JOB RE-0611</span><h3>Bell Creek drive gate</h3>
+        <dl><dt>Where</dt><dd>Norman, OK · 2025</dd><dt>Opening</dt><dd>18 ft double swing, operator and loop</dd><dt>Iron</dt><dd>Forged pickets, collared, riveted rails</dd><dt>Finish</dt><dd>Oil-rubbed bronze</dd></dl></div>
+    </div>
+    <div class="ledge" data-rv>
+      <div class="ph"><img src="img/stair.webp" alt="Curved staircase with hand-forged iron balustrade" loading="lazy"></div>
+      <div class="ledge-tx"><span class="jn">JOB RE-0587</span><h3>Curved balustrade</h3>
+        <dl><dt>Where</dt><dd>Edmond, OK · 2025</dd><dt>Run</dt><dd>Site-templated, 14 treads plus landing</dd><dt>Iron</dt><dd>Forged scroll panels, oak cap rail</dd><dt>Finish</dt><dd>Forged black</dd></dl></div>
+    </div>
+    <div class="ledge" data-rv>
+      <div class="ph"><img src="img/window.webp" alt="Tall arched steel window with slim black mullions" loading="lazy"></div>
+      <div class="ledge-tx"><span class="jn">JOB RE-0542</span><h3>Arched steel window</h3>
+        <dl><dt>Where</dt><dd>Nichols Hills, OK · 2024</dd><dt>Opening</dt><dd>11 ft head, thermally broken</dd><dt>Iron</dt><dd>Slim hot-rolled profiles, true divided lites</dd><dt>Finish</dt><dd>Forged black</dd></dl></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ROUTE CARD ================= -->
+<section class="sec sec--plate wrap" id="process">
+  <div class="sec-head">
+    <div data-rv><p class="lab">Route card</p><h2>What happens<br>after you send it</h2></div>
+    <p data-rv>Twelve to sixteen weeks. Every job travels with a card like this, so nothing about week nine is a surprise.</p>
+  </div>
+  <div class="route" data-rv>
+    <div class="stn"><span class="wk">Station 1 · Week 1</span><h3>Measure</h3><p>We template the opening ourselves. Plumb, square and header height decide more of the design than taste does.</p></div>
+    <div class="stn"><span class="wk">Station 2 · Weeks 2–3</span><h3>Draw</h3><p>A full-size elevation, marked up and revised until you sign it. Nothing is cut before you have seen it at scale.</p><span class="stamp">Client signs</span></div>
+    <div class="stn"><span class="wk">Station 3 · Weeks 4–12</span><h3>Forge</h3><p>Six to ten weeks at the anvil. Photographs at the frame, the ornament and the glazing.</p></div>
+    <div class="stn"><span class="wk">Station 4 · Weeks 12–14</span><h3>Finish</h3><p>Hand-applied patina, sealed. Approved on a sample from your own door, not a chip card.</p><span class="stamp">Inspected</span></div>
+    <div class="stn"><span class="wk">Station 5 · Weeks 14–16</span><h3>Install</h3><p>Our crew, one to two days. We set it, adjust the locks and come back at ninety days.</p><span class="stamp">90-day return</span></div>
+  </div>
+  <div class="route-foot"><span class="lab">Half on signed drawing · balance on completion · no deposit before you sign</span><span class="lab">Gates with operators add 2–3 weeks</span></div>
+</section>
+
+<!-- ================= ANSWERS ================= -->
+<section class="sec wrap" id="answers" style="background:var(--plate);color:var(--ink);border-top:1px solid var(--line-l)">
+  <div class="sec-head">
+    <div data-rv><p class="lab" style="color:var(--scale-2)">Straight answers</p><h2>Cost and timing<br>before the form</h2></div>
+    <p data-rv>If these numbers do not work for your project, better that we both know now.</p>
+  </div>
+  <div class="bigfacts" data-rv>
+    <div class="bf"><span class="lab" style="color:var(--scale-2)">Single doors from</span><b>$9,800</b><p>Forged and installed. Doubles start around $16,000; a double with an arched transom typically lands between $24,000 and $42,000.</p></div>
+    <div class="bf"><span class="lab" style="color:var(--scale-2)">Lead time</span><b>12–16 wks</b><p>From signed drawing to installed. Gates with operators add two to three weeks for the electrical.</p></div>
+    <div class="bf"><span class="lab" style="color:var(--scale-2)">Where we work</span><b>Oklahoma</b><p>Norman, Oklahoma City and the surrounding metro as standard. Further out by arrangement.</p></div>
+  </div>
+  <details class="qa"><summary>Is the door in the configurator the door I get?</summary><div class="a">It is the starting point. The pictures are real renders of each style, finish and glass combination, and the shop builds to a full-size drawing of your opening. Proportions change with your opening; the ironwork, finish and glass do not.</div></details>
+  <details class="qa"><summary>Is forged iron actually different from what a fabricator sells?</summary><div class="a">Yes, and it is visible. Forged elements taper and thicken where the metal was moved under a hammer. Cold-bent stock is a constant thickness the whole way round, and cast ornament repeats identically across every door in a catalogue.</div></details>
+  <details class="qa"><summary>How does payment work?</summary><div class="a">A design retainer for the drawings, credited in full against the build. Half on approval of the drawing, the balance on completion before install. No deposit until you have signed a full-size elevation.</div></details>
+  <details class="qa"><summary>What about rust and Oklahoma weather?</summary><div class="a">Everything is primed and sealed, and exterior work gets a finish specified for west and south exposure. Maintenance sheet included, ninety-day return visit, and exterior re-oiling at cost after year one.</div></details>
+  <details class="qa"><summary>Do you do repairs and restoration?</summary><div class="a">Yes, on period ironwork especially. Send photographs and a rough measurement and we will say honestly whether it is worth restoring.</div></details>
+</section>
+
+<!-- ================= SEND ================= -->
+<section class="sec wrap" id="send">
+  <div class="send-grid">
+    <div data-rv>
+      <p class="lab">Send it to the shop</p>
+      <h2 style="margin-top:.5rem">Your ticket,<br>our anvil</h2>
+      <p style="margin-top:1.2rem;max-width:40ch;font-size:var(--f-lead);line-height:1.45;color:var(--scale)">A rough opening size and a photograph of the wall is enough. A person replies within two business days.</p>
+      <div style="margin-top:2rem;display:grid;gap:.6rem">
+        <p class="lab">Or directly</p>
+        <p><a href="mailto:hello@reironwork.example" style="border-bottom:1px solid var(--line)">hello@reironwork.example</a></p>
+        <p class="lab">Mon–Fri · 7am–4pm Central</p>
+      </div>
+    </div>
+    <div class="tkt" data-rv>
+      <form id="quoteForm" novalidate>
+        <div class="carry" id="carryBox">
+          <div class="hd"><span class="lab">Attached ticket</span><b id="carryNo"></b></div>
+          <p id="carryText" style="font-size:var(--f-small)"></p>
+          <p class="lab" id="carryPrice"></p>
+        </div>
+        <div class="two">
+          <div class="field"><label for="f-name">Your name</label><input id="f-name" type="text" autocomplete="name" required><span class="err" data-err="f-name"></span></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" autocomplete="email" required><span class="err" data-err="f-email"></span></div>
+        </div>
+        <div class="two">
+          <div class="field"><label for="f-phone">Phone (optional)</label><input id="f-phone" type="tel" autocomplete="tel"><span class="err"></span></div>
+          <div class="field"><label for="f-city">City</label><input id="f-city" type="text" autocomplete="address-level2"><span class="err"></span></div>
+        </div>
+        <div class="field"><label for="f-msg">The opening, and anything else</label>
+          <textarea id="f-msg" placeholder="Rough width and height, and a note if you already know what you want changed."></textarea><span class="err" data-err="f-msg"></span></div>
+        <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn--ink" type="submit" style="width:100%;padding:1rem"><span id="submitLabel">Send ticket</span></button>
+        <p class="t-note" style="margin-top:.8rem">Used to answer you and nothing else. No list, no sequence.</p>
+      </form>
+      <div class="sent" id="sentBox" role="status">
+        <h3>Ticket received</h3>
+        <p style="font-size:var(--f-small)">A person will come back within two business days with first questions and a firm range.</p>
+        <p class="lab" id="sentNote" style="color:var(--scale-2)"></p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-col"><a class="brand" href="#build"><i></i>RE Ironwork</a><p style="font-size:var(--f-small);color:var(--scale);max-width:30ch">Hand-forged architectural ironwork. One shop, one anvil, one door at a time.</p></div>
+      <div class="f-col"><p class="lab">Build</p><a href="#build">Configurator</a><a href="#wall">Every door</a><a href="#choices">Finishes and glass</a><a href="#work">Recent jobs</a></div>
+      <div class="f-col"><p class="lab">Answers</p><a href="#answers">Cost and lead times</a><a href="#process">Route card</a><a href="#send">Send a ticket</a></div>
+      <div class="f-col"><p class="lab">Reach</p><a href="mailto:hello@reironwork.example">hello@reironwork.example</a><p class="lab">Norman, Oklahoma</p></div>
+    </div>
+    <div class="f-bot">
+      <span class="proto mono">Design prototype</span>
+      <p class="lab" style="max-width:66ch;line-height:1.6;text-transform:none;letter-spacing:.02em">Door renders are AI-generated concept photography. Branding, copy, projects, prices, lead times and contact details are placeholders. Ruben Torres is the only confirmed business detail.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="img/doors/index.js"></script>
+<script>
+(function(){
+  "use strict";
+  var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var NAMES={
+    config:{double:"Double",single:"Single"},
+    style:{tuscan:"Tuscan",modern:"Modern",gothic:"Gothic",deco:"Art Deco",flush:"Flush"},
+    finish:{black:"Forged black",bronze:"Oil-rubbed bronze",patina:"Aged patina",pewter:"Antique pewter"},
+    glass:{clear:"Clear",frosted:"Frosted",reeded:"Reeded"}
+  };
+  var CODE={config:{double:"D",single:"S"},style:{tuscan:"TUS",modern:"MOD",gothic:"GOT",deco:"DEC",flush:"FLU"},
+            finish:{black:"BLK",bronze:"BRZ",patina:"PAT",pewter:"PEW"},glass:{clear:"CLR",frosted:"FRO",reeded:"RED"}};
+  var OPEN={double:"72 × 96 in",single:"42 × 96 in"};
+  var LEAD={tuscan:"14–16 wks",modern:"12–14 wks",gothic:"14–16 wks",deco:"13–15 wks",flush:"12 wks"};
+  var PRICE={single:{tuscan:14800,modern:9800,gothic:15200,deco:13600,flush:10400},
+             double:{tuscan:26500,modern:16000,gothic:27800,deco:24200,flush:17500}};
+  var ADD={finish:{black:0,bronze:900,patina:1400,pewter:1200},glass:{clear:0,frosted:350,reeded:600}};
+  var AVAILABLE=window.__DOORS||null;
+
+  var DEF={config:"double",style:"tuscan",finish:"black",glass:"clear"};
+  var state=Object.assign({},DEF);
+
+  function keyOf(s){return s.config+"-"+s.style+"-"+s.finish+"-"+s.glass}
+  function codeOf(s){return "RE-"+CODE.config[s.config]+"-"+CODE.style[s.style]+"-"+CODE.finish[s.finish]+"-"+CODE.glass[s.glass]}
+  function code(){return codeOf(state)}
+  function spec(){return NAMES.config[state.config]+" · "+NAMES.style[state.style]+" · "+NAMES.finish[state.finish]+" · "+NAMES.glass[state.glass]}
+  function price(){return PRICE[state.config][state.style]+ADD.finish[state.finish]+ADD.glass[state.glass]}
+  function money(n){return "$"+n.toLocaleString("en-US")}
+  function has(k){return !AVAILABLE||AVAILABLE.indexOf(k)>=0}
+  function resolve(){
+    var k=keyOf(state); if(has(k)) return {k:k,exact:true};
+    var tries=[Object.assign({},state,{glass:"clear"}),Object.assign({},state,{finish:"black",glass:"clear"})];
+    for(var i=0;i<tries.length;i++){var t=keyOf(tries[i]); if(has(t)) return {k:t,exact:false}}
+    return {k:keyOf(Object.assign({},DEF)),exact:false};
+  }
+
+  var tno;
+  try{tno=sessionStorage.getItem("re-ticket")}catch(e){}
+  if(!tno){var d=new Date(),a="ABCDEFGHJKMNPQRSTUVWXYZ23456789",r="";for(var i=0;i<3;i++)r+=a[Math.floor(Math.random()*a.length)];
+    tno="RE-"+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")+"-"+r;
+    try{sessionStorage.setItem("re-ticket",tno)}catch(e){}}
+  $("#ticketNo").textContent=tno;
+
+  var imgs=[$("#imgA"),$("#imgB")], cur=0, pend=$("#pend");
+  function show(k,exact){
+    var next=imgs[1-cur], src="img/doors/"+k+".webp";
+    if(imgs[cur].getAttribute("src")===src){pend.classList.toggle("on",!exact);return}
+    next.onload=function(){next.classList.add("on");imgs[cur].classList.remove("on");cur=1-cur;next.onload=null};
+    next.alt=spec()+" iron entry door, front elevation";
+    next.src=src;
+    pend.classList.toggle("on",!exact);
+  }
+  function preload(){
+    ["finish","glass"].forEach(function(ax){Object.keys(NAMES[ax]).forEach(function(v){
+      if(v===state[ax])return; var s=Object.assign({},state); s[ax]=v; var k=keyOf(s);
+      if(has(k)){var im=new Image(); im.src="img/doors/"+k+".webp"}})});
+  }
+
+  function render(){
+    var r=resolve(); show(r.k,r.exact); preload();
+    $$(".chips").forEach(function(g){var k=g.dataset.k;$$(".chip",g).forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.v===state[k]))})});
+    $$(".thumb").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.v===state.style));
+      var im=b.querySelector("img"), want="img/doors/"+state.config+"-"+b.dataset.v+"-black-clear.thumb.webp";
+      if(im.getAttribute("src")!==want) im.src=want});
+    var cur=keyOf(state); $$(".tile").forEach(function(t){t.classList.toggle("on",t.dataset.k===cur)});
+    $("#curConfig").textContent=NAMES.config[state.config]; $("#curStyle").textContent=NAMES.style[state.style];
+    $("#curFinish").textContent=NAMES.finish[state.finish]; $("#curGlass").textContent=NAMES.glass[state.glass];
+    $("#tagKey").textContent=NAMES.config[state.config]+" · "+NAMES.style[state.style]; $("#tagCode").textContent=code();
+    $("#specLine").textContent=spec(); $("#specOpen").textContent=OPEN[state.config];
+    $("#specLead").textContent=LEAD[state.style]; $("#specPrice").textContent=money(price());
+    $("#carryNo").textContent=tno+" · "+code(); $("#carryText").textContent=spec();
+    $("#carryPrice").textContent="From "+money(price())+" · "+OPEN[state.config]+" · "+LEAD[state.style];
+  }
+
+  /* style strip */
+  var strip=$("#strip");
+  Object.keys(NAMES.style).forEach(function(v){
+    var b=document.createElement("button"); b.className="thumb"; b.type="button"; b.dataset.v=v; b.setAttribute("aria-label",NAMES.style[v]);
+    var im=document.createElement("img"); im.alt=""; im.loading="lazy"; im.src="img/doors/double-"+v+"-black-clear.thumb.webp";
+    var s=document.createElement("span"); s.textContent=NAMES.style[v]; b.appendChild(im); b.appendChild(s); strip.appendChild(b);
+    b.addEventListener("click",function(){state.style=v;render()});
+  });
+  $$(".chips").forEach(function(g){var k=g.dataset.k;$$(".chip",g).forEach(function(b){b.addEventListener("click",function(){
+    if(state[k]===b.dataset.v)return; state[k]=b.dataset.v; render()})})});
+  $("#resetBtn").addEventListener("click",function(){state=Object.assign({},DEF);render()});
+  $("#sendBtn").addEventListener("click",function(){setTimeout(function(){var n=$("#f-name");if(n)n.focus({preventScroll:true})},600)});
+
+  /* the wall: 120 tiles, ordered config -> style -> finish -> glass */
+  var wall=$("#wallGrid");
+  Object.keys(NAMES.config).forEach(function(c){Object.keys(NAMES.style).forEach(function(s){
+    Object.keys(NAMES.finish).forEach(function(f){Object.keys(NAMES.glass).forEach(function(g){
+      var st={config:c,style:s,finish:f,glass:g}, k=keyOf(st);
+      var b=document.createElement("button"); b.className="tile"; b.type="button"; b.dataset.k=k; b.dataset.code=codeOf(st);
+      b.setAttribute("aria-label",NAMES.config[c]+" "+NAMES.style[s]+", "+NAMES.finish[f]+", "+NAMES.glass[g]);
+      var im=document.createElement("img"); im.alt=""; im.loading="lazy"; im.src="img/doors/"+k+".thumb.webp";
+      b.appendChild(im); wall.appendChild(b);
+      b.addEventListener("click",function(){state=Object.assign({},st); render();
+        window.scrollTo({top:0,behavior:RM?"auto":"smooth"})});
+    })})})});
+
+  /* material board */
+  var BOARD=[
+    ["Forged black","finish","black","Mill scale left on, waxed. Darkest in the recesses."],
+    ["Oil-rubbed bronze","finish","bronze","Warm brown, copper on the edges. Wears in, not off."],
+    ["Aged patina","finish","patina","Verdigris in the low spots. Never the same twice."],
+    ["Antique pewter","finish","pewter","Cool satin silver. Reads lighter at a distance."],
+    ["Clear","glass","clear","Low-iron, tempered. You see the hallway."],
+    ["Frosted","glass","frosted","Acid-etched. Light through, no view in."],
+    ["Reeded","glass","reeded","Fluted verticals. Privacy without the fog."]
+  ];
+  var bIm=$("#boardIm"), bList=$("#boardList"), bCap=$("#boardCap"), bImgs=[];
+  BOARD.forEach(function(m,i){
+    var k=(m[1]==="finish")?("double-tuscan-"+m[2]+"-clear"):("double-tuscan-black-"+m[2]);
+    var im=document.createElement("img"); im.src="img/doors/macro-"+k+".webp"; im.alt=m[0]+" close up"; im.loading="lazy";
+    if(i===0)im.classList.add("on"); bIm.insertBefore(im,bCap); bImgs.push(im);
+    var row=document.createElement("button"); row.type="button"; row.className="board-row"+(i===0?" on":"");
+    row.innerHTML="<b>"+m[0]+"</b><span>"+m[3]+"</span><span class='k'>"+(m[1]==="finish"?"Finish":"Glass")+" · "+CODE[m[1]][m[2]]+"</span>";
+    function pick(){bImgs.forEach(function(x,j){x.classList.toggle("on",j===i)}); $$(".board-row").forEach(function(x,j){x.classList.toggle("on",j===i)}); bCap.textContent=m[0]}
+    row.addEventListener("mouseenter",pick); row.addEventListener("focus",pick); row.addEventListener("click",function(){pick(); state[m[1]]=m[2]; render()});
+    bList.appendChild(row);
+  });
+
+  /* reveal */
+  var rv=$$("[data-rv]");
+  if(!("IntersectionObserver" in window)||RM){rv.forEach(function(e){e.classList.add("in")})}
+  else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{rootMargin:"0px 0px -8% 0px"});rv.forEach(function(e){io.observe(e)})}
+
+  /* form */
+  var form=$("#quoteForm");
+  var RULES={"f-name":function(v){return v.trim().length>=2?"":"Tell us what to call you."},
+             "f-email":function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())?"":"We need a working email to reply to."},
+             "f-msg":function(v){return v.trim().length>=8?"":"A rough size is enough."}};
+  function check(id){var el=document.getElementById(id),m=RULES[id](el.value),f=el.closest(".field"),s=form.querySelector('[data-err="'+id+'"]');
+    if(s)s.textContent=m; f.classList.toggle("bad",!!m); el.setAttribute("aria-invalid",m?"true":"false"); return !m}
+  Object.keys(RULES).forEach(function(id){var el=document.getElementById(id);el.addEventListener("blur",function(){check(id)});
+    el.addEventListener("input",function(){if(el.closest(".field").classList.contains("bad"))check(id)})});
+  form.addEventListener("submit",function(e){e.preventDefault();
+    if(!Object.keys(RULES).map(check).every(Boolean)){var b=form.querySelector(".field.bad input,.field.bad textarea");if(b)b.focus();return}
+    if(form.querySelector('[name="company"]').value)return;
+    $("#submitLabel").textContent="Sending";
+    setTimeout(function(){form.style.display="none";var box=$("#sentBox");box.classList.add("on");
+      $("#sentNote").textContent="Prototype: this form is not wired to a mailbox yet, so nothing was sent. Ticket "+tno+" · "+code();
+      box.scrollIntoView({behavior:RM?"auto":"smooth",block:"center"})},600)});
+
+  render();
+})();
+</script>
+</body>
+</html>
