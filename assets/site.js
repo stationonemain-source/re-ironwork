@@ -96,20 +96,21 @@
       function measure(){
         geo.w=hc.clientWidth;geo.h=hc.clientHeight;
         var ft=hc.querySelector(".hc-foot"),room=ft.offsetTop-Math.round(geo.h*0.5)-18;
-        geo.full=Math.max(150,Math.min(460,geo.h*0.37,room));geo.half=geo.full/2;geo.cw=geo.full*0.75;
-        geo.gap=Math.max(6,Math.round(geo.cw*0.04));geo.step=geo.cw+geo.gap;
+        geo.full=Math.max(150,Math.min(460,geo.h*0.37,room));geo.small=Math.round(geo.full*0.62);
+        geo.cw=geo.full*0.75;geo.sw=geo.small*0.75;
+        geo.gap=Math.max(8,Math.round(geo.cw*0.06));geo.step=geo.sw+geo.gap;
         var top=Math.round(geo.h*0.5);
         strip.style.top=top+"px";strip.style.height=geo.full+"px";
         head.style.bottom=(geo.h-top+Math.round(geo.h*0.028))+"px";
         track.style.gap=geo.gap+"px";
         $("#hcTitle").style.fontSize=Math.max(34,Math.round(geo.h*0.078))+"px";
-        cards.forEach(function(c){c.style.width=geo.cw+"px"});
         place(false);
       }
       function xFor(i){return geo.w/2-(i*geo.step+geo.cw/2)}
+      function nearest(x){return Math.round((geo.w/2-x-geo.cw/2)/geo.step)}
       function setX(x,anim){curX=x;track.classList.toggle("drag",!anim);track.style.transform="translate3d("+x+"px,0,0)"}
       function place(anim){setX(xFor(idx),anim!==false);
-        cards.forEach(function(c,i){var s=items[i];c.style.height=(i===idx?geo.full:geo.half)+"px";c.setAttribute("aria-current",String(i===idx));
+        cards.forEach(function(c,i){var s=items[i];var on=i===idx;c.style.height=(on?geo.full:geo.small)+"px";c.style.width=(on?geo.cw:geo.sw)+"px";c.setAttribute("aria-current",String(i===idx));
           c.setAttribute("aria-label",(i===idx?"Open ":"Show ")+nameOf(s)+", "+specOf(s)+(i===idx?" in the configurator":""))})}
       function paintBg(){
         var s=items[idx],L=document.createElement("div");L.className="hc-layer";
@@ -136,7 +137,7 @@
         if(!moved)return;var x=bx+dx,lo=xFor(last),hi=xFor(0);if(x>hi)x=hi+(x-hi)*.08;if(x<lo)x=lo+(x-lo)*.08;setX(x,false);
         var dt=Math.max(1,e.timeStamp-lt);vx=(e.clientX-lx)/dt;lx=e.clientX;lt=e.timeStamp});
       addEventListener("pointerup",function(){if(!dragging)return;dragging=false;paused=false;
-        if(moved){var thrown=curX+vx*120;go(Math.round((geo.w/2-thrown-geo.cw/2)/geo.step));setTimeout(function(){moved=false},0)}});
+        if(moved){var thrown=curX+vx*120;go(nearest(thrown));setTimeout(function(){moved=false},0)}});
       /* horizontal trackpad swipes step the strip; vertical scrolling always belongs to the page */
       var acc=0,until=0;
       hc.addEventListener("wheel",function(e){if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;
