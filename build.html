@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>document.documentElement.classList.add("js")</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Build a door, RE Ironwork</title>
+<meta name="description" content="Choose single or double, one of five styles, four finishes and three glasses. See the photograph of that exact door and a starting price.">
+<meta name="theme-color" content="#2B2F33">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%232B2F33'/%3E%3Cpath d='M9 27V13a7 7 0 0 1 14 0v14' fill='none' stroke='%23F5A524' stroke-width='2.4'/%3E%3Cpath d='M16 6v21' stroke='%23F5A524' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="build">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="RE Ironwork home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#F5A524" stroke-width="1.8" aria-hidden="true"><path d="M5 22V10a7 7 0 0 1 14 0v12"/><path d="M12 3v19"/><path d="M8 14c0-2 1.6-3 2.6-2s0 3-1.4 3"/><path d="M16 14c0-2-1.6-3-2.6-2s0 3 1.4 3"/></svg>
+      RE Ironwork
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="build.html" aria-current="page">Build a door</a>
+      <a href="doors.html">All 120 doors</a>
+      <a href="work.html">Work</a>
+      <a href="process.html">Process</a>
+      <a href="shop.html">The shop</a>
+    </nav>
+    <a class="chip-ticket" href="quote.html" data-ticket-chip aria-label="Your job ticket">
+      <img alt="" width="28" height="38" src="img/doors/double-tuscan-black-clear.thumb.webp">
+      <span><span class="t1">Your ticket</span><span class="t2 data">Start one</span></span>
+    </a>
+    <button class="menu-btn" type="button" aria-controls="navLinks" aria-expanded="false"><span class="sr">Menu</span>
+      <svg width="20" height="14" viewBox="0 0 20 14" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M0 1h20M0 7h20M0 13h20"/></svg></button>
+  </div>
+</header>
+
+<main id="main">
+<section class="build" aria-label="Door configurator">
+  <div class="stage">
+    <div class="stage-head">
+      <h1>Build a door</h1>
+      <p class="quiet" style="font-size:var(--f-sm)">A photograph of the door you pick, not a drawing.</p>
+    </div>
+    <div class="stage-view">
+      <div class="render"><img id="imgA" alt="Double Tuscan iron entry door, forged black, clear glass" class="on" src="img/doors/double-tuscan-black-clear.webp"><img id="imgB" alt="" src="img/doors/double-tuscan-black-clear.webp"></div>
+    </div>
+    <div class="stage-cap"><span class="pend data" id="pend" role="status"></span><span class="data" id="stageCode"></span></div>
+    <div class="strip" id="strip" role="group" aria-label="Style"></div>
+  </div>
+
+  <div class="ticket" role="group" aria-label="Job ticket">
+    <div class="t-head">
+      <div><p class="label">Job ticket</p><p class="t-no" data-ticket-no></p></div>
+      <button class="btn" type="button" id="resetBtn" style="padding:.55rem .8rem;color:var(--ink);border-color:var(--line-l)">Start over</button>
+    </div>
+    <div class="t-body">
+      <div class="grp"><div class="grp-lab"><span class="label" style="color:var(--scale-2)">Configuration</span><span class="cur" id="cur-config"></span></div>
+        <div class="chips c2" data-k="config">
+          <button class="chip" type="button" data-v="double"><span class="nm">Double</span><span class="sub">Two leaves, 72 in wide</span></button>
+          <button class="chip" type="button" data-v="single"><span class="nm">Single</span><span class="sub">One leaf, 42 in wide</span></button>
+        </div></div>
+      <div class="grp"><div class="grp-lab"><span class="label" style="color:var(--scale-2)">Style</span><span class="cur" id="cur-style"></span></div>
+        <div class="chips c5" data-k="style">
+          <button class="chip" type="button" data-v="tuscan"><span class="nm">Tuscan</span><span class="sub">Scrollwork</span></button>
+          <button class="chip" type="button" data-v="modern"><span class="nm">Modern</span><span class="sub">Bar grid</span></button>
+          <button class="chip" type="button" data-v="gothic"><span class="nm">Gothic</span><span class="sub">Pickets</span></button>
+          <button class="chip" type="button" data-v="deco"><span class="nm">Art Deco</span><span class="sub">Geometric</span></button>
+          <button class="chip" type="button" data-v="flush"><span class="nm">Flush</span><span class="sub">Plain lite</span></button>
+        </div></div>
+      <div class="grp"><div class="grp-lab"><span class="label" style="color:var(--scale-2)">Finish</span><span class="cur" id="cur-finish"></span></div>
+        <div class="chips c4" data-k="finish">
+          <button class="chip" type="button" data-v="black"><span class="sw sw-black"></span><span class="nm">Forged black</span></button>
+          <button class="chip" type="button" data-v="bronze"><span class="sw sw-bronze"></span><span class="nm">Oil-rubbed bronze</span></button>
+          <button class="chip" type="button" data-v="patina"><span class="sw sw-patina"></span><span class="nm">Aged patina</span></button>
+          <button class="chip" type="button" data-v="pewter"><span class="sw sw-pewter"></span><span class="nm">Antique pewter</span></button>
+        </div></div>
+      <div class="grp"><div class="grp-lab"><span class="label" style="color:var(--scale-2)">Glass</span><span class="cur" id="cur-glass"></span></div>
+        <div class="chips c3" data-k="glass">
+          <button class="chip" type="button" data-v="clear"><span class="sw sw-clear"></span><span class="nm">Clear</span></button>
+          <button class="chip" type="button" data-v="frosted"><span class="sw sw-frosted"></span><span class="nm">Frosted</span></button>
+          <button class="chip" type="button" data-v="reeded"><span class="sw sw-reeded"></span><span class="nm">Reeded</span></button>
+        </div></div>
+      <dl class="t-spec">
+        <div class="t-row"><dt>Opening</dt><dd id="specOpen"></dd></div>
+        <div class="t-row"><dt>Lead time</dt><dd id="specLead"></dd></div>
+        <div class="t-row big"><dt>From</dt><dd id="specPrice"></dd></div>
+      </dl>
+    </div>
+    <div class="t-foot">
+      <a class="btn btn-ink" data-carry="quote.html" href="quote.html">Send your ticket <span class="ar" aria-hidden="true">&rarr;</span></a>
+      <p class="t-note">A starting figure for this door, installed in the metro. The shop confirms the number after measuring your opening.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec on-plate">
+  <div class="wrap">
+    <div class="head" data-rv>
+      <h2>Finish and glass, up close</h2>
+      <p class="lede">Cropped from the door photographs, so this is the finish on the door. Tap a line to put it on your ticket.</p>
+    </div>
+    <div class="board" data-rv>
+      <figure style="margin:0"><div class="board-im" id="boardIm"></div><figcaption class="board-cap quiet" id="boardCap" style="color:var(--scale-2);font-size:var(--f-sm)">Forged black finish, cropped from the door photograph</figcaption></figure>
+      <div class="board-list" id="boardList"></div>
+    </div>
+  </div>
+</section>
+
+<nav class="next" aria-label="Next">
+  <a href="doors.html"><span class="quiet" style="font-size:var(--f-sm)">Not sure yet?</span><h3>Browse all 120 doors <span class="ar" aria-hidden="true">&rarr;</span></h3></a>
+  <a href="process.html"><span class="quiet" style="font-size:var(--f-sm)">After you send it</span><h3>How a door gets made <span class="ar" aria-hidden="true">&rarr;</span></h3></a>
+</nav>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-col">
+        <a class="brand" href="index.html" style="margin:0">RE Ironwork</a>
+        <p class="quiet" style="font-size:var(--f-sm);max-width:32ch">Forged iron doors, gates, windows and stairs. One shop in Norman, Oklahoma.</p>
+      </div>
+      <div class="f-col"><p class="label">Doors</p><a href="build.html">Build a door</a><a href="doors.html">All 120 doors</a><a href="quote.html">Send your ticket</a></div>
+      <div class="f-col"><p class="label">The shop</p><a href="work.html">Work</a><a href="process.html">Process and pricing</a><a href="shop.html">About the shop</a></div>
+      <div class="f-col"><p class="label">Reach us</p><a href="mailto:hello@reironwork.example">hello@reironwork.example</a><p class="quiet" style="font-size:var(--f-sm)">Monday to Friday, 7am to 4pm Central</p></div>
+    </div>
+    <div class="f-bot">
+      <span class="proto">Design prototype</span>
+      <p class="quiet" style="font-size:var(--f-xs);max-width:70ch;line-height:1.6">Door and shop photographs are AI-generated concept renders. Branding, copy, projects, prices, lead times and contact details are placeholders. Ruben Torres is the only confirmed business detail.</p>
+    </div>
+  </div>
+</footer>
+<script src="img/doors/index.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

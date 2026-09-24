@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>document.documentElement.classList.add("js")</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Send your ticket, RE Ironwork</title>
+<meta name="description" content="Send the door you built to the shop with a rough opening size. A person replies within two business days.">
+<meta name="theme-color" content="#2B2F33">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%232B2F33'/%3E%3Cpath d='M9 27V13a7 7 0 0 1 14 0v14' fill='none' stroke='%23F5A524' stroke-width='2.4'/%3E%3Cpath d='M16 6v21' stroke='%23F5A524' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="quote">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="RE Ironwork home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#F5A524" stroke-width="1.8" aria-hidden="true"><path d="M5 22V10a7 7 0 0 1 14 0v12"/><path d="M12 3v19"/><path d="M8 14c0-2 1.6-3 2.6-2s0 3-1.4 3"/><path d="M16 14c0-2-1.6-3-2.6-2s0 3 1.4 3"/></svg>
+      RE Ironwork
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="build.html">Build a door</a>
+      <a href="doors.html">All 120 doors</a>
+      <a href="work.html">Work</a>
+      <a href="process.html">Process</a>
+      <a href="shop.html">The shop</a>
+    </nav>
+    <a class="chip-ticket" href="quote.html" data-ticket-chip aria-label="Your job ticket">
+      <img alt="" width="28" height="38" src="img/doors/double-tuscan-black-clear.thumb.webp">
+      <span><span class="t1">Your ticket</span><span class="t2 data">Start one</span></span>
+    </a>
+    <button class="menu-btn" type="button" aria-controls="navLinks" aria-expanded="false"><span class="sr">Menu</span>
+      <svg width="20" height="14" viewBox="0 0 20 14" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M0 1h20M0 7h20M0 13h20"/></svg></button>
+  </div>
+</header>
+
+<main id="main">
+<section class="sec-tight">
+  <div class="wrap head" style="margin-bottom:0">
+    <h1>Send your ticket</h1>
+    <p class="lede">Your door is attached. Add a rough opening size and a person at the shop replies within two business days.</p>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:clamp(1rem,2vw,1.6rem)">
+  <div class="wrap send">
+    <div class="ticket-card" role="group" aria-label="Your ticket">
+      <div class="tc-top">
+        <div class="ph"><img id="tcImg" alt="Double Tuscan iron entry door, forged black, clear glass" src="img/doors/double-tuscan-black-clear.webp"></div>
+        <div>
+          <h2 data-ticket-name>Double Tuscan</h2>
+          <p style="font-size:var(--f-sm)" data-ticket-spec></p>
+          <p class="data" style="margin-top:.5rem"><span data-ticket-code></span><br>Ticket <span data-ticket-no></span></p>
+        </div>
+      </div>
+      <dl class="tc-spec" style="margin:0">
+        <div class="t-row"><dt>Opening</dt><dd id="tcOpen"></dd></div>
+        <div class="t-row"><dt>Lead time</dt><dd id="tcLead"></dd></div>
+        <div class="t-row big"><dt>From</dt><dd id="tcPrice"></dd></div>
+      </dl>
+      <div class="tc-foot"><p class="t-note" id="tcNote" style="margin-bottom:.7rem">The shop confirms the number after measuring your opening.</p>
+        <a class="btn" id="tcChange" href="build.html" style="color:var(--ink);border-color:var(--line-l);width:100%">Change the door</a></div>
+    </div>
+
+    <div>
+      <div class="perf">
+        <form id="quoteForm" novalidate>
+          <div class="two">
+            <div class="field"><label for="f-name">Your name</label><input id="f-name" type="text" autocomplete="name" required><span class="err" data-err="f-name"></span></div>
+            <div class="field"><label for="f-email">Email</label><input id="f-email" type="email" autocomplete="email" required><span class="err" data-err="f-email"></span></div>
+          </div>
+          <div class="two">
+            <div class="field"><label for="f-phone">Phone <span class="hint">(optional)</span></label><input id="f-phone" type="tel" autocomplete="tel"></div>
+            <div class="field"><label for="f-city">City</label><input id="f-city" type="text" autocomplete="address-level2"></div>
+          </div>
+          <div class="field"><label for="f-msg">The opening</label><span class="hint" id="f-msg-hint">Rough width and height, and anything you would change about the door.</span>
+            <textarea id="f-msg" aria-describedby="f-msg-hint" required></textarea><span class="err" data-err="f-msg"></span></div>
+          <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn btn-ink" id="submitBtn" type="submit" style="width:100%;padding:1rem">Send ticket</button>
+          <p class="t-note" style="margin-top:.8rem">Used to answer you and nothing else. No mailing list.</p>
+        </form>
+        <div class="sent" id="sentBox" tabindex="-1" role="status">
+          <h2 style="font-size:var(--f-h3)">Ticket sent</h2>
+          <p style="color:var(--scale-2)">A person will reply within two business days with first questions and a firm range.</p>
+          <p class="data" id="sentNote" style="color:var(--amber-dk);line-height:1.6"></p>
+        </div>
+      </div>
+      <p class="quiet" style="margin-top:1.4rem;font-size:var(--f-sm)">Rather write? <a class="tlink" href="mailto:hello@reironwork.example">hello@reironwork.example</a>, Monday to Friday, 7am to 4pm Central.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-col">
+        <a class="brand" href="index.html" style="margin:0">RE Ironwork</a>
+        <p class="quiet" style="font-size:var(--f-sm);max-width:32ch">Forged iron doors, gates, windows and stairs. One shop in Norman, Oklahoma.</p>
+      </div>
+      <div class="f-col"><p class="label">Doors</p><a href="build.html">Build a door</a><a href="doors.html">All 120 doors</a><a href="quote.html">Send your ticket</a></div>
+      <div class="f-col"><p class="label">The shop</p><a href="work.html">Work</a><a href="process.html">Process and pricing</a><a href="shop.html">About the shop</a></div>
+      <div class="f-col"><p class="label">Reach us</p><a href="mailto:hello@reironwork.example">hello@reironwork.example</a><p class="quiet" style="font-size:var(--f-sm)">Monday to Friday, 7am to 4pm Central</p></div>
+    </div>
+    <div class="f-bot">
+      <span class="proto">Design prototype</span>
+      <p class="quiet" style="font-size:var(--f-xs);max-width:70ch;line-height:1.6">Door and shop photographs are AI-generated concept renders. Branding, copy, projects, prices, lead times and contact details are placeholders. Ruben Torres is the only confirmed business detail.</p>
+    </div>
+  </div>
+</footer>
+<script src="img/doors/index.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>
