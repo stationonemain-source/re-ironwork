@@ -39,20 +39,26 @@
 </header>
 
 <main id="main">
-<section class="hero">
-  <div class="wrap hero-in">
-    <div>
-      <h1>See your door before we forge it.</h1>
-      <p class="lede">Pick a style, finish and glass. Every combination is photographed, so you choose from the real thing.</p>
-      <div class="row">
-        <a class="btn btn-amber" id="heroBuild" href="build.html">Build this door <span class="ar" aria-hidden="true">&rarr;</span></a>
-        <a class="btn" href="doors.html">See all 120</a>
-      </div>
+<section class="hc" id="hc" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Doors from the configurator">
+  <div id="hcBg"></div>
+  <div class="hc-wash"></div>
+  <div class="hc-grain" aria-hidden="true"></div>
+  <div class="hc-intro">
+    <h1>See your door before we forge it.</h1>
+    <p>Every door here is a photograph from the configurator. Drag the strip, or click the tall door to build it.</p>
+  </div>
+  <div class="hc-head" id="hcHead" aria-live="polite">
+    <h2 class="hc-title" id="hcTitle">Double Tuscan</h2>
+    <p class="hc-credit data" id="hcCredit"></p>
+    <div class="hc-meta" id="hcMeta"></div>
+  </div>
+  <div class="hc-strip" id="hcStrip"><div class="hc-track" id="hcTrack"></div></div>
+  <div class="hc-foot">
+    <div class="hc-rail data" aria-hidden="true"><div class="nums"><span id="hcNow">04</span><span id="hcTotal">15</span></div><div class="bar"><i id="hcBar"></i></div></div>
+    <div class="row">
+      <a class="btn btn-amber" id="hcBuild" href="build.html">Build this door <span class="ar" aria-hidden="true">&rarr;</span></a>
+      <a class="btn" href="doors.html">See all 120</a>
     </div>
-    <figure class="hero-door" style="margin:0">
-      <div class="ph" id="heroDoor"><img class="on" src="img/doors/double-tuscan-black-clear.webp" alt="Double Tuscan iron entry door, forged black, clear glass" data-static></div>
-      <figcaption class="cap"><span id="heroCapName">Double Tuscan, forged black, clear glass</span><span class="data" id="heroCapCode"></span></figcaption>
-    </figure>
   </div>
 </section>
 
@@ -72,24 +78,19 @@
   </div>
 </section>
 
-<section class="sec">
-  <div class="wrap">
-    <p class="sentence" data-rv>
-      You pick it here. We measure your opening<span class="inl"><img src="img/site/measure.webp" alt="" loading="lazy"></span>
-      and draw it full size<span class="inl"><img src="img/site/drawing.webp" alt="" loading="lazy"></span>.
-      <span class="dim">Then it is forged by hand<span class="inl"><img src="img/forge.webp" alt="" loading="lazy"></span>
-      and hung by the people who made it.</span>
-    </p>
-    <p style="margin-top:2rem" data-rv><a class="tlink" href="process.html">How a door gets made, week by week</a></p>
-  </div>
-</section>
-
-<section class="bleed">
-  <img src="img/site/shop.webp" alt="Inside the shop: a coal forge glowing at the back, anvils, and iron door frames on racks" loading="lazy">
-  <div class="wrap">
-    <p class="quote" data-rv>"I would rather turn work away than send it to somebody I cannot stand next to at the anvil."</p>
-    <div class="by" data-rv><i></i><div><p style="font-weight:650">Ruben Torres</p><p class="quiet" style="font-size:var(--f-sm)">Founder</p></div></div>
-    <p style="margin-top:1.6rem" data-rv><a class="tlink" href="shop.html">About the shop</a></p>
+<section class="sg" id="sg" aria-label="How a door gets made">
+  <div class="sg-pin">
+    <div class="sg-images" id="sgImages"><div class="sg-layer"><img src="img/site/measure.webp" alt="Measuring an arched stone opening with a tape"></div></div>
+    <div class="sg-shade"></div>
+    <div class="sg-info">
+      <div class="sg-row">
+        <p class="sg-prefix">The process</p>
+        <div class="sg-title"><p id="sgTitle">Measure</p></div>
+        <a class="sg-link" id="sgLink" href="process.html#measure">Week 1</a>
+      </div>
+    </div>
+    <p class="sg-note" id="sgNote">We template your opening ourselves. Plumb, square and header height decide more of the design than taste.</p>
+    <div class="sg-steps" id="sgSteps" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
   </div>
 </section>
 
@@ -110,6 +111,15 @@
       </div>
     </div>
     <p style="margin-top:2rem" data-rv><a class="tlink" href="work.html">See all the work</a></p>
+  </div>
+</section>
+
+<section class="bleed">
+  <img src="img/site/shop.webp" alt="Inside the shop: a coal forge glowing at the back, anvils, and iron door frames on racks" loading="lazy">
+  <div class="wrap">
+    <p class="quote" data-rv>"I would rather turn work away than send it to somebody I cannot stand next to at the anvil."</p>
+    <div class="by" data-rv><i></i><div><p style="font-weight:650">Ruben Torres</p><p class="quiet" style="font-size:var(--f-sm)">Founder</p></div></div>
+    <p style="margin-top:1.6rem" data-rv><a class="tlink" href="shop.html">About the shop</a></p>
   </div>
 </section>
 
